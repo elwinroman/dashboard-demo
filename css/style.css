@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    /* sizes */
+    --navbar-height: 65px;
+    --sidebar-width: 250px;
+    --sidebar-short-width: 80px;
+    --menu-link-height: 45px; 
+    --footer-height: 65px;
+    /* animation */
+    --time: 200ms;
+}
+
+/* ############# Navbar ########## */
+.mynavbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: var(--navbar-height);
+    background-color: #eeeaea;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+}
+.mynavbar > div.logo {
+    flex-grow: 1;
+}
+.mynavbar .toggle-sidebar {
+    color: red;
+    cursor: pointer;
+}
+main {
+    position: relative;
+    display: flex;
+    min-height: calc(100vh - var(--navbar-height));
+} 
+/* ############# Sidebar ########## */
+.sidebar {
+    z-index: 1000;
+    position: fixed;
+    top: var(--navbar-height);
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    display: flex;
+    flex-direction: column;
+    transition: width var(--time) ease-in-out;
+}
+/* Menu */
+.sidebar .menu-sidebar {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.menu-panel > .menu-link {
+    cursor: pointer;
+    height: var(--menu-link-height);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    margin: 0 12px;
+    transition: background-color var(--time) ease-in-out;
+    
+    border-radius: 6px;
+}
+.menu-link > i.menu-icon {
+    width: 20px;
+    flex-shrink: 0;
+    font-size: 1.3rem;
+    transition: color var(--time) ease-in-out;
+}
+.menu-link > span.menu-label {
+    flex-shrink: 0;
+    flex-grow: 1;
+    transition: opacity var(--time) ease-in-out, color var(--time) ease-in-out;
+}
+.menu-link > i.menu-arrow {
+    transition: transform var(--time) ease-in-out, color var(--time) ease-in-out;
+}
+.menu-panel.active i.menu-arrow {
+    transform: rotate(90deg);
+}
+.menu-panel > .submenu-panel {
+    height: 0;
+    overflow: hidden;
+    transition: height var(--time) ease-in-out;
+}
+.submenu-panel .submenu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: var(--menu-link-height);
+    cursor: pointer;
+    padding: 0 50px;
+}
+.submenu-link .submenu-icon {
+    font-size: 5px;
+    transition: color var(--time) ease;
+}
+.submenu-link .submenu-label {
+    transition: color var(--time) ease;
+}
+/* sidebar short */
+body.short .sidebar {
+    width: var(--sidebar-short-width);
+}
+body.short .menu-panel {
+    margin-top: 10px;
+}
+body.short .menu-link {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+body.short .menu-link > i.menu-icon {
+    width: var(--sidebar-short-width);
+    text-align: center;
+}
+body.short .menu-link > span.menu-label,
+body.short .menu-link > i.menu-arrow {
+    opacity: 0;
+}
+body.short .submenu-panel {
+    opacity: 0;
+    position: fixed;
+    background-color: white;
+    transform: translateX(-10px);
+    margin-left: var(--sidebar-short-width);
+    pointer-events: none;
+    transition-property: transform, opacity;
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 16%);
+}
+body.short .menu-panel.active .submenu-panel {
+    height: auto !important;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+/* ############# themes code ################ */
+.sidebar {
+    /* background-color: #1E1E2D; dark */
+    background-color: white;
+    border-right: 1px solid #d7e0ea; 
+}
+.menu-link,
+.submenu-link {
+    /* color: #9899ac; dark */ 
+    color: #7E8299
+}
+.menu-panel.active .menu-link,
+.menu-link:hover {
+/* .submenu-link:hover { */
+    /* background-color: #1b1b28; */
+    /* background-color: #bfc9d4; */
+    background-color: #F3F6F9;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.102), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+.menu-link:hover > .menu-label,
+.menu-link:hover > .menu-arrow,
+.submenu-link:hover > .submenu-label {
+    /* color: #ffffff; dark*/
+    color: #181C32;
+
+}
+.menu-link:hover > .menu-icon,
+.submenu-link:hover > .submenu-icon {
+    /* color:#009EF7; */
+    color: #181C32;
+}
+/* content */
+.content {
+    background: #F5F8FA;
+}
+/* short sidebar */
+
+/* ############# Contenido principal ########## */
+.content {
+    padding: 20px;
+    margin-bottom: var(--footer-height);
+    margin-left: var(--sidebar-width);
+
+    transition: margin-left var(--time) ease-in-out, width var(--time) ease-in-out;
+}
+body.short .content {
+    margin-left: var(--sidebar-short-width);
+    width: calc(100% - var(--sidebar-short-width));
+}
+
+/* ############# Footer ########## */
+footer {
+    position: absolute;
+    bottom: 0;
+    margin-left: var(--sidebar-width);
+    background-color: gray;
+    height: var(--footer-height);
+    width: calc(100% - var(--sidebar-width));
+    transition: margin-left var(--time) ease-in-out, width var(--time) ease-in-out;
+}
+body.short footer {   /* reposicionamiento del footer para un sidebar más pequeño */
+    margin-left: var(--sidebar-short-width);
+    width: calc(100% - var(--sidebar-short-width));
+}
